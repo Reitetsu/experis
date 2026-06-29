@@ -48,9 +48,7 @@ internal sealed class GlobalExceptionHandler : IExceptionHandler
         {
             case ApplicationValidationException validationException:
                 statusCode = StatusCodes.Status400BadRequest;
-                _logger.LogInformation(
-                    exception,
-                    "A validation error occurred while processing the request.");
+                _logger.LogInformation("A validation error occurred while processing the request.");
 
                 return new HttpValidationProblemDetails(validationException.Errors)
                 {
@@ -61,7 +59,6 @@ internal sealed class GlobalExceptionHandler : IExceptionHandler
             case TaskNotFoundException notFoundException:
                 statusCode = StatusCodes.Status404NotFound;
                 _logger.LogInformation(
-                    exception,
                     "Task with id {TaskId} was not found.",
                     notFoundException.TaskId);
 

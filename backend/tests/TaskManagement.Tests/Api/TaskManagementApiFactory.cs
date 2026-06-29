@@ -10,15 +10,23 @@ namespace TaskManagement.Tests.Api;
 
 public sealed class TaskManagementApiFactory : WebApplicationFactory<Program>
 {
+    private const string ConnectionStringEnvironmentVariableName =
+        "ConnectionStrings__TaskManagement";
+
     private const string TestConnectionString =
         "Server=(localdb)\\TaskManagementLocalDb;Database=TaskManagementDb;Integrated Security=true;TrustServerCertificate=true;";
+
+    private readonly string? _previousConnectionString;
 
     public FakeTaskRepository Repository { get; } = new();
 
     public TaskManagementApiFactory()
     {
+        _previousConnectionString =
+            Environment.GetEnvironmentVariable(ConnectionStringEnvironmentVariableName);
+
         Environment.SetEnvironmentVariable(
-            "ConnectionStrings__TaskManagement",
+            ConnectionStringEnvironmentVariableName,
             TestConnectionString);
     }
 
@@ -42,5 +50,14 @@ public sealed class TaskManagementApiFactory : WebApplicationFactory<Program>
             services.AddScoped<ITaskRepository>(
                 serviceProvider => serviceProvider.GetRequiredService<FakeTaskRepository>());
         });
+    }
+
+    protected override void Dispose(bool disposing)
+    {
+        Environment.SetEnvironmentVariable(
+            ConnectionStringEnvironmentVariableName,
+            _previousConnectionString);
+
+        base.Dispose(disposing);
     }
 }

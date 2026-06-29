@@ -18,7 +18,9 @@ public class TasksController : ControllerBase
     }
 
     [HttpGet]
-    [ProducesResponseType(typeof(IEnumerable<TaskDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(
+        typeof(IReadOnlyCollection<TaskDto>),
+        StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(HttpValidationProblemDetails), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult<IReadOnlyCollection<TaskDto>>> GetAsync(
