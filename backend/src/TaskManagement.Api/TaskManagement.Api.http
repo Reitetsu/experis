@@ -1,0 +1,39 @@
+@host = http://localhost:5080
+
+GET {{host}}/api/tasks
+Accept: application/json
+
+###
+
+GET {{host}}/api/tasks?status=Pending
+Accept: application/json
+
+###
+
+GET {{host}}/api/tasks?priority=High
+Accept: application/json
+
+###
+
+GET {{host}}/api/tasks?status=Pending&priority=High
+Accept: application/json
+
+###
+
+GET {{host}}/api/tasks?status=Cancelled
+Accept: application/json
+
+###
+
+GET {{host}}/api/tasks/1
+Accept: application/json
+
+###
+
+GET {{host}}/api/tasks/999999
+Accept: application/json
+
+###
+
+GET {{host}}/api/tasks/0
+Accept: application/json
