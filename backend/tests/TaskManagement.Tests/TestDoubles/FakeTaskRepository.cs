@@ -11,6 +11,10 @@ public class FakeTaskRepository : ITaskRepository
 
     public TaskItem? TaskByIdToReturn { get; set; }
 
+    public Exception? ExceptionToThrowOnGetAsync { get; set; }
+
+    public Exception? ExceptionToThrowOnGetByIdAsync { get; set; }
+
     public DomainTaskStatus? ReceivedStatus { get; private set; }
 
     public DomainTaskPriority? ReceivedPriority { get; private set; }
@@ -25,11 +29,31 @@ public class FakeTaskRepository : ITaskRepository
 
     public int GetByIdAsyncCallCount { get; private set; }
 
+    public void Reset()
+    {
+        TasksToReturn = Array.Empty<TaskItem>();
+        TaskByIdToReturn = null;
+        ExceptionToThrowOnGetAsync = null;
+        ExceptionToThrowOnGetByIdAsync = null;
+        ReceivedStatus = null;
+        ReceivedPriority = null;
+        ReceivedId = null;
+        ReceivedListCancellationToken = default;
+        ReceivedByIdCancellationToken = default;
+        GetAsyncCallCount = 0;
+        GetByIdAsyncCallCount = 0;
+    }
+
     public Task<IReadOnlyCollection<TaskItem>> GetAsync(
         DomainTaskStatus? status,
         DomainTaskPriority? priority,
         CancellationToken cancellationToken)
     {
+        if (ExceptionToThrowOnGetAsync is not null)
+        {
+            throw ExceptionToThrowOnGetAsync;
+        }
+
         GetAsyncCallCount++;
         ReceivedStatus = status;
         ReceivedPriority = priority;
@@ -42,6 +66,11 @@ public class FakeTaskRepository : ITaskRepository
         int id,
         CancellationToken cancellationToken)
     {
+        if (ExceptionToThrowOnGetByIdAsync is not null)
+        {
+            throw ExceptionToThrowOnGetByIdAsync;
+        }
+
         GetByIdAsyncCallCount++;
         ReceivedId = id;
         ReceivedByIdCancellationToken = cancellationToken;
