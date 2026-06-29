@@ -1,0 +1,15 @@
+bin/
+obj/
+.vs/
+.vscode/
+node_modules/
+.idea/
+*.user
+*.suo
+*.db
+*.sqlite
+*.log
+backend/src/TaskManagement.Api/appsettings.Development.json
+**/TestResults/
+**/coverage.cobertura.xml
+**/coverage*.xml
