@@ -1,76 +1,102 @@
-import {getApiBaseUrl} from '../../../config/apiConfig';
+import axios, {AxiosError} from 'axios';
+
+import {httpClient} from '../../../api/httpClient';
 import type {TaskDto, TaskFilter} from '../models/task';
+
+type ProblemDetails = {
+  detail?: string;
+  errors?: Record<string, string[]>;
+  title?: string;
+};
 
 export async function getTasks(
   filter: TaskFilter,
   signal?: AbortSignal,
 ): Promise<ReadonlyArray<TaskDto>> {
-  const searchParams = new URLSearchParams();
+  const params: Record<string, string> = {};
 
   if (filter.status) {
-    searchParams.set('status', filter.status);
+    params.status = filter.status;
   }
 
   if (filter.priority) {
-    searchParams.set('priority', filter.priority);
+    params.priority = filter.priority;
   }
 
-  const query = searchParams.toString();
-  const url = `${getApiBaseUrl()}/api/tasks${query ? `?${query}` : ''}`;
-  return await requestJson<ReadonlyArray<TaskDto>>(url, signal);
+  return await requestJson<ReadonlyArray<TaskDto>>('/api/tasks', {
+    params,
+    signal,
+  });
 }
 
 export async function getTaskById(
   taskId: number,
   signal?: AbortSignal,
 ): Promise<TaskDto> {
-  return await requestJson<TaskDto>(
-    `${getApiBaseUrl()}/api/tasks/${taskId}`,
-    signal,
-  );
+  return await requestJson<TaskDto>(`/api/tasks/${taskId}`, {signal});
 }
 
-async function requestJson<T>(url: string, signal?: AbortSignal): Promise<T> {
-  const response = await fetch(url, {
-    method: 'GET',
-    headers: {
-      Accept: 'application/json',
-    },
-    signal,
-  });
-
-  if (!response.ok) {
-    throw new Error(await buildErrorMessage(response));
-  }
-
-  return (await response.json()) as T;
-}
-
-async function buildErrorMessage(response: Response): Promise<string> {
+async function requestJson<T>(
+  path: string,
+  options: {
+    params?: Record<string, string>;
+    signal?: AbortSignal;
+  },
+): Promise<T> {
   try {
-    const data = (await response.json()) as {
-      detail?: string;
-      errors?: Record<string, string[]>;
-      title?: string;
-    };
+    const response = await httpClient.get<T>(path, options);
+    return response.data;
+  } catch (error) {
+    throw buildRequestError(error);
+  }
+}
 
-    if (data.errors) {
-      const firstMessage = Object.values(data.errors).flat()[0];
-      if (firstMessage) {
-        return firstMessage;
-      }
-    }
-
-    if (data.detail) {
-      return data.detail;
-    }
-
-    if (data.title) {
-      return data.title;
-    }
-  } catch {
-    // Ignore parsing problems and fall back to the HTTP status.
+function buildRequestError(error: unknown): Error {
+  if (
+    axios.isCancel(error) ||
+    (axios.isAxiosError(error) && error.code === 'ERR_CANCELED')
+  ) {
+    const abortError = new Error('La solicitud fue cancelada.');
+    abortError.name = 'AbortError';
+    return abortError;
   }
 
-  return `La API respondio con estado ${response.status}.`;
+  if (axios.isAxiosError<ProblemDetails>(error)) {
+    return buildAxiosError(error);
+  }
+
+  if (error instanceof Error) {
+    return error;
+  }
+
+  return new Error('Ocurrio un error inesperado al consultar la API.');
+}
+
+function buildAxiosError(error: AxiosError<ProblemDetails>): Error {
+  if (error.code === 'ECONNABORTED') {
+    return new Error('La solicitud a la API excedio el tiempo de espera.');
+  }
+
+  if (!error.response) {
+    return new Error('No fue posible conectar con la API.');
+  }
+
+  const data = error.response.data;
+
+  if (data?.errors) {
+    const firstMessage = Object.values(data.errors).flat()[0];
+    if (firstMessage) {
+      return new Error(firstMessage);
+    }
+  }
+
+  if (data?.detail) {
+    return new Error(data.detail);
+  }
+
+  if (data?.title) {
+    return new Error(data.title);
+  }
+
+  return new Error(`La API respondio con estado ${error.response.status}.`);
 }
