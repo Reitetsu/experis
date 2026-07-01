@@ -11,6 +11,7 @@ Aplicacion full stack para consultar tareas con filtros por estado y prioridad d
 - Validacion de filtros invalidos con `ProblemDetails`.
 - Persistencia en SQL Server mediante procedimientos almacenados.
 - App movil con listado, recarga, filtros, estado vacio y detalle de tarea.
+- Cliente HTTP movil centralizado con Axios.
 
 ## Estructura Del Repositorio
 
@@ -117,6 +118,10 @@ npm run android
 
 La app Android usa `http://10.0.2.2:5080` para acceder a la API desde el emulador.
 
+## Evaluacion Y Cumplimiento
+
+[Ver informe final de cumplimiento](./docs/challenge-compliance-report.md)
+
 ## Pruebas
 
 ### Backend
@@ -153,4 +158,5 @@ npx react-native doctor
 
 - [Arquitectura](./docs/architecture.md)
 - [Decisiones tecnicas](./docs/technical-decisions.md)
+- [Informe final de cumplimiento](./docs/challenge-compliance-report.md)
 - [Guia del movil](./mobile/README.md)

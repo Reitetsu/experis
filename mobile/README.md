@@ -57,6 +57,7 @@ http://10.0.2.2:5080
 ```
 
 Ese valor esta centralizado en `src/config/apiConfig.ts`.
+Las solicitudes HTTP se centralizan en `src/api/httpClient.ts` mediante Axios.
 
 ## Pruebas
 
@@ -78,3 +79,4 @@ npx react-native doctor
 - Recarga manual.
 - Pantalla de detalle con `taskId`.
 - Manejo de loading, error y estado vacio.
+- Cliente HTTP centralizado con Axios y cancelacion por `AbortSignal`.

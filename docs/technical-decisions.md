@@ -35,12 +35,12 @@
 - Alternativa: manejar el detalle con modales y estado local.
 - Desventaja: agrega dependencias y configuracion adicional en pruebas.
 
-## Fetch Nativo Frente A Axios
+## Axios Frente A Fetch Nativo
 
-- Problema que resuelve: consumir la API desde el movil con soporte de cancelacion mediante `AbortController`.
-- Razon de eleccion: ya estaba disponible en React Native y evita sumar otra dependencia HTTP.
-- Alternativa: Axios.
-- Desventaja: se pierde la comodidad de interceptores y una capa de errores mas rica desde el cliente.
+- Problema que resuelve: centralizar la configuracion HTTP, el timeout, los encabezados y el manejo uniforme de errores.
+- Razon de eleccion: Axios forma parte del stack solicitado y simplifica el tratamiento consistente de timeout, red, cancelacion y `ProblemDetails`.
+- Alternativa: fetch nativo.
+- Desventaja: agrega una dependencia externa al cliente movil.
 
 ## Estado Local Frente A Redux
 
