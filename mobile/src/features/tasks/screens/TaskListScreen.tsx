@@ -85,18 +85,23 @@ export function TaskListScreen() {
   };
 
   const header = (
-    <View style={[styles.header, {paddingTop: safeAreaInsets.top + 12}]}>
+    <View style={[styles.header, {paddingTop: safeAreaInsets.top + 10}]}>
       <View style={styles.headerPanel}>
         <Text style={styles.eyebrow}>Reto de gestion de tareas</Text>
-        <Text style={styles.title}>Tablero movil de tareas</Text>
+        <Text style={styles.title}>Tareas</Text>
         <Text style={styles.subtitle}>
-          Lista, filtros y detalle consumiendo la API REST del backend.
+          Lista, filtros y detalle conectados con la API del backend.
         </Text>
 
-        <View style={styles.environmentBadge}>
-          <Text style={styles.environmentText}>
-            API local: {formatApiTarget()}
-          </Text>
+        <View style={styles.metaRow}>
+          <View style={styles.environmentBadge}>
+            <Text style={styles.environmentText}>
+              API local: {formatApiTarget()}
+            </Text>
+          </View>
+          <View style={styles.countBadge}>
+            <Text style={styles.countBadgeText}>{tasks.length} tareas</Text>
+          </View>
         </View>
       </View>
 
@@ -116,12 +121,7 @@ export function TaskListScreen() {
           formatter={formatPriorityLabel}
         />
       </View>
-
       <View style={styles.summaryRow}>
-        <View>
-          <Text style={styles.summaryLabel}>Resultados</Text>
-          <Text style={styles.summaryValue}>{tasks.length} tareas</Text>
-        </View>
         <Pressable onPress={refreshTasks} style={styles.refreshButton}>
           <Text style={styles.refreshButtonText}>Actualizar</Text>
         </Pressable>
@@ -281,38 +281,42 @@ const styles = StyleSheet.create({
   },
   header: {
     paddingHorizontal: 20,
-    paddingBottom: 24,
+    paddingBottom: 18,
     backgroundColor: '#114b5f',
-    borderBottomLeftRadius: 28,
-    borderBottomRightRadius: 28,
-    marginBottom: 16,
+    borderBottomLeftRadius: 24,
+    borderBottomRightRadius: 24,
+    marginBottom: 12,
   },
   headerPanel: {
-    gap: 8,
+    gap: 6,
   },
   eyebrow: {
     color: '#d4f1f4',
-    fontSize: 13,
-    letterSpacing: 1.4,
+    fontSize: 12,
+    letterSpacing: 1.8,
     textTransform: 'uppercase',
     fontWeight: '700',
   },
   title: {
     color: '#ffffff',
-    fontSize: 34,
-    lineHeight: 38,
+    fontSize: 28,
+    lineHeight: 32,
     fontWeight: '800',
   },
   subtitle: {
     color: '#dce8eb',
-    fontSize: 15,
-    lineHeight: 22,
+    fontSize: 14,
+    lineHeight: 20,
+  },
+  metaRow: {
+    marginTop: 6,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
   },
   environmentBadge: {
-    alignSelf: 'flex-start',
-    marginTop: 8,
     paddingHorizontal: 12,
-    paddingVertical: 8,
+    paddingVertical: 7,
     backgroundColor: '#0b3140',
     borderRadius: 999,
   },
@@ -321,9 +325,20 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: '600',
   },
+  countBadge: {
+    paddingHorizontal: 12,
+    paddingVertical: 7,
+    borderRadius: 999,
+    backgroundColor: '#1b647a',
+  },
+  countBadgeText: {
+    color: '#ffffff',
+    fontSize: 12,
+    fontWeight: '700',
+  },
   filtersSection: {
-    marginTop: 24,
-    gap: 16,
+    marginTop: 18,
+    gap: 14,
   },
   filterGroup: {
     gap: 10,
@@ -359,28 +374,16 @@ const styles = StyleSheet.create({
     color: '#1c1a17',
   },
   summaryRow: {
-    marginTop: 24,
+    marginTop: 18,
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-end',
     alignItems: 'center',
-  },
-  summaryLabel: {
-    color: '#c0d7df',
-    fontSize: 12,
-    textTransform: 'uppercase',
-    letterSpacing: 1.1,
-    fontWeight: '700',
-  },
-  summaryValue: {
-    color: '#ffffff',
-    fontSize: 22,
-    fontWeight: '800',
   },
   refreshButton: {
     backgroundColor: '#ffffff',
     borderRadius: 999,
-    paddingHorizontal: 16,
-    paddingVertical: 10,
+    paddingHorizontal: 15,
+    paddingVertical: 9,
   },
   refreshButtonText: {
     color: '#114b5f',

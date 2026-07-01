@@ -23,7 +23,7 @@ export function AppNavigator() {
         <Stack.Screen
           component={TaskListScreen}
           name="TaskList"
-          options={{title: 'Tablero movil'}}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           component={TaskDetailScreen}
