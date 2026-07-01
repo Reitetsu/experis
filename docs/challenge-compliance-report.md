@@ -12,12 +12,12 @@
 
 | Requisito | Estado | Evidencia | Validación | Observaciones |
 | --- | --- | --- | --- | --- |
-| Listado de tareas | Cumplido | `GET /api/tasks`, `TaskListScreen`, captura final | API devolvio 9 tareas en español | Visible en screenshot final |
+| Listado de tareas | Cumplido | `GET /api/tasks`, `TaskListScreen`, captura final | API devolvio 9 tareas | Visible en screenshot final |
 | Filtro por estado | Cumplido | `GET /api/tasks?status=Pending` | Respuesta con 3 tareas | Integrado en `TaskListScreen` |
 | Filtro por prioridad | Cumplido | `GET /api/tasks?priority=High` | Respuesta con 3 tareas | Integrado en `TaskListScreen` |
 | Filtros combinados | Cumplido | `GET /api/tasks?status=Pending&priority=High` | Respuesta con 1 tarea | Mismo flujo de filtros |
 | Detalle | Cumplido | `TaskDetailScreen`, `GET /api/tasks/{id}` | `GET /api/tasks/1` valido | Navegacion tipada por `taskId` |
-| Titulo | Cumplido | DTO `TaskDto`, tarjetas y detalle | Visible en API y UI | Datos en español |
+| Titulo | Cumplido | DTO `TaskDto`, tarjetas y detalle | Visible en API y UI |
 | Descripcion | Cumplido | DTO `TaskDto`, tarjetas y detalle | Visible en API y UI | Soporta texto largo |
 | Prioridad | Cumplido | Badges y filtro | API y UI la muestran | Valores tecnicos se conservan en BD |
 | Estado | Cumplido | Badges y filtro | API y UI lo muestran | Valores tecnicos se conservan en BD |
@@ -42,7 +42,7 @@
 | Requisito | Estado | Evidencia | Validación | Observaciones |
 | --- | --- | --- | --- | --- |
 | React Native CLI | Cumplido | Proyecto nativo en `mobile/` | Estructura Android/iOS presente | No se uso Expo |
-| TypeScript | Cumplido | `tsconfig.json`, `src/**/*.ts*` | `npx tsc --noEmit` paso antes del `npm ci` final | Se debe repetir localmente tras reinstalacion limpia |
+| TypeScript | Cumplido | `tsconfig.json`, `src/**/*.ts*` | `npx tsc --noEmit` termino sin errores tras la instalacion limpia | |
 | React Navigation | Cumplido | `AppNavigator`, `TaskStackParamList` | Pruebas y build del cliente | Stack tipado |
 | Axios | Cumplido | `src/api/httpClient.ts`, `tasksApi.ts` | Cliente centralizado | Timeout y errores unificados |
 | Listado | Cumplido | `TaskListScreen` | Pruebas y captura final | |
@@ -66,7 +66,7 @@
 | Documentacion | Cumplido | `docs/` | Archivos presentes | Arquitectura, decisiones e informe |
 | Diagramas | Cumplido | Mermaid en `docs/architecture.md` | Archivo presente | 3 diagramas |
 | Captura | Cumplido | `screenshots/mobile-task-board-final.png` | Archivo presente | Solo se conserva evidencia final |
-| Pruebas | Cumplido con observaciones | Backend y mobile | Resultados parciales y finales disponibles | `npm ci` final quedo interrumpido en esta sesion |
+| Pruebas | Cumplido con observaciones | Backend y mobile | Resultados automatizados finales disponibles | Queda solo una comprobacion visual final en Android |
 
 ## 6. Criterios de evaluación
 
@@ -75,7 +75,7 @@
 | Arquitectura | Cumplido | Solucion separada por capas y docs | Codigo y diagramas | |
 | Calidad | Cumplido | Tipado, validaciones, pruebas | Build y tests | |
 | Buenas prácticas | Cumplido | User Secrets, DTOs, repositorio limpio | Git y codigo | |
-| Funcionamiento | Cumplido con observaciones | API validada, captura final | Emulador requiere reconfirmacion local | |
+| Funcionamiento | Cumplido con observaciones | API validada, captura final | Queda una comprobacion visual final en Android | |
 | Documentación | Cumplido | README y docs | Archivos presentes | |
 | Decisiones técnicas | Cumplido | `docs/technical-decisions.md` | Archivo presente | |
 
@@ -109,12 +109,13 @@ No se implemento:
 ## 9. Evidencia de pruebas
 
 - Pruebas backend: la solucion compilo en Release y `dotnet test --configuration Release --no-build` termino sin error final visible en la sesion.
-- Pruebas frontend antes de la reinstalacion limpia: 3 suites y 9 pruebas al incluir `tasksApi.test.ts`.
-- TypeScript: correcto antes de la reinstalacion limpia final.
-- Lint: correcto antes de la reinstalacion limpia final.
-- Doctor: pendiente de repeticion estable tras `npm ci` limpio.
+- Instalacion limpia frontend: `npm ci` completo correctamente, instalo 895 paquetes y audito 896 paquetes.
+- Pruebas frontend: 3 suites y 9 pruebas aprobadas despues de la instalacion limpia.
+- TypeScript: `npx tsc --noEmit` termino sin errores despues de la instalacion limpia.
+- Lint: `npm run lint` termino sin errores despues de la instalacion limpia.
+- Doctor: el ultimo resultado completo detecto un problema temporal de conectividad Android; posteriormente ADB mostro `emulator-5554 device`, pero no se obtuvo una nueva salida completa antes de cerrar la sesion.
 - Endpoints manuales: `GET /api/tasks`, filtros, combinacion, `GET /api/tasks/1`, `400` por filtro invalido, `404` por ID inexistente.
-- Prueba en emulador: existe evidencia visual del tablero; la reconfirmacion final de esta ultima iteracion depende de que el emulador salga de estado `offline`.
+- Prueba manual: Metro y ADB quedaron operativos; la compilacion Android avanzo, pero falta una confirmacion visual final de la version con Axios.
 
 ## 10. Desviaciones y decisiones
 
@@ -137,4 +138,4 @@ No se implemento:
 
 ## 12. Conclusión
 
-El reto presenta un nivel alto de cumplimiento funcional y tecnico, con backend, base de datos, documentacion y cliente movil implementados y publicados. Queda listo para evaluación técnica, con la observacion honesta de que la ultima validacion manual del emulador y la reinstalacion limpia de `node_modules` deben reconfirmarse localmente cuando el entorno Android quede estable.
+El reto presenta un nivel alto de cumplimiento funcional y tecnico. El codigo, las pruebas automatizadas, la documentacion y Git quedaron completos; solo resta una comprobacion manual visual final en Android para reconfirmar la version con Axios en el emulador. El proyecto queda listo para evaluacion con esa observacion puntual de entorno.
