@@ -65,7 +65,7 @@
 | Scripts SQL | Cumplido | `database/01..06` | Archivos presentes | Seed y localizacion en español |
 | Documentacion | Cumplido | `docs/` | Archivos presentes | Arquitectura, decisiones e informe |
 | Diagramas | Cumplido | Mermaid en `docs/architecture.md` | Archivo presente | 3 diagramas |
-| Captura | Cumplido | `screenshots/mobile-task-board-final.png` | Archivo presente | Solo se conserva evidencia final |
+| Captura | Cumplido | `screenshots/mobile-task-board-compact-final.png` | Archivo presente | Solo se conserva evidencia final |
 | Pruebas | Cumplido con observaciones | Backend y mobile | Resultados automatizados finales disponibles | Queda solo una comprobacion visual final en Android |
 
 ## 6. Criterios de evaluación

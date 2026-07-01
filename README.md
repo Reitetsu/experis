@@ -2,7 +2,7 @@
 
 Aplicacion full stack para consultar tareas con filtros por estado y prioridad desde una API .NET y una app movil React Native.
 
-![Tablero movil](./screenshots/mobile-task-board-final.png)
+![Tablero movil](./screenshots/mobile-task-board-compact-final.png)
 
 ## Funcionalidades
 
