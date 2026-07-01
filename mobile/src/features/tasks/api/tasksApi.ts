@@ -1,20 +1,10 @@
-import {Platform} from 'react-native';
+import {getApiBaseUrl} from '../../../config/apiConfig';
+import type {TaskDto, TaskFilter} from '../models/task';
 
-import type {TaskDto, TaskPriority, TaskStatus} from '../types/tasks';
-
-export type TaskFilter = {
-  status?: TaskStatus;
-  priority?: TaskPriority;
-};
-
-const API_HOST =
-  Platform.OS === 'android' ? 'http://10.0.2.2:5080' : 'http://localhost:5080';
-
-export function getApiBaseUrl(): string {
-  return API_HOST;
-}
-
-export async function getTasks(filter: TaskFilter): Promise<ReadonlyArray<TaskDto>> {
+export async function getTasks(
+  filter: TaskFilter,
+  signal?: AbortSignal,
+): Promise<ReadonlyArray<TaskDto>> {
   const searchParams = new URLSearchParams();
 
   if (filter.status) {
@@ -26,20 +16,27 @@ export async function getTasks(filter: TaskFilter): Promise<ReadonlyArray<TaskDt
   }
 
   const query = searchParams.toString();
-  const url = `${API_HOST}/api/tasks${query ? `?${query}` : ''}`;
-  return await requestJson<ReadonlyArray<TaskDto>>(url);
+  const url = `${getApiBaseUrl()}/api/tasks${query ? `?${query}` : ''}`;
+  return await requestJson<ReadonlyArray<TaskDto>>(url, signal);
 }
 
-export async function getTaskById(id: number): Promise<TaskDto> {
-  return await requestJson<TaskDto>(`${API_HOST}/api/tasks/${id}`);
+export async function getTaskById(
+  taskId: number,
+  signal?: AbortSignal,
+): Promise<TaskDto> {
+  return await requestJson<TaskDto>(
+    `${getApiBaseUrl()}/api/tasks/${taskId}`,
+    signal,
+  );
 }
 
-async function requestJson<T>(url: string): Promise<T> {
+async function requestJson<T>(url: string, signal?: AbortSignal): Promise<T> {
   const response = await fetch(url, {
     method: 'GET',
     headers: {
       Accept: 'application/json',
     },
+    signal,
   });
 
   if (!response.ok) {

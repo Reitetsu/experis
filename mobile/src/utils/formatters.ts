@@ -1,5 +1,8 @@
-import {getApiBaseUrl} from '../services/tasksApi';
-import type {TaskPriority, TaskStatus} from '../types/tasks';
+import {getApiBaseUrl} from '../config/apiConfig';
+import type {
+  TaskPriority,
+  TaskStatus,
+} from '../features/tasks/models/task';
 
 const STATUS_LABELS: Record<TaskStatus, string> = {
   Pending: 'Pendiente',

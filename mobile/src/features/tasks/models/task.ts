@@ -10,3 +10,8 @@ export type TaskDto = {
   status: TaskStatus;
   createdAt: string;
 };
+
+export type TaskFilter = {
+  status?: TaskStatus;
+  priority?: TaskPriority;
+};
