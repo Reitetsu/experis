@@ -1,6 +1,6 @@
 IF DB_ID(N'TaskManagementDb') IS NULL
 BEGIN
-    THROW 51000, 'TaskManagementDb does not exist. Run 01-create-database.sql first.', 1;
+    THROW 51000, 'TaskManagementDb no existe. Ejecuta primero 01-create-database.sql.', 1;
 END;
 GO
 
@@ -19,73 +19,73 @@ BEGIN
     )
     VALUES
     (
-        N'Review onboarding checklist',
-        N'Check the pending onboarding items for the new analyst and confirm which tasks can start this week.',
+        N'Revisar lista de incorporación',
+        N'Revisar los pendientes de incorporación del nuevo analista y confirmar qué tareas pueden iniciar esta semana.',
         'Low',
         'Pending',
         '2026-06-01T08:00:00'
     ),
     (
-        N'Prepare sprint scope',
-        N'Draft the sprint scope for the mobile team and align the planned work with the current release objectives.',
+        N'Preparar alcance del sprint',
+        N'Redactar el alcance del sprint para el equipo móvil y alinear el trabajo planificado con los objetivos de la entrega actual.',
         'Medium',
         'Pending',
         '2026-06-02T08:00:00'
     ),
     (
-        N'Finalize executive presentation',
-        N'Prepare the final version of the executive presentation, confirm the metrics with product and operations, and include a longer narrative section that can later help validate how a more extensive task description is rendered in the React Native detail screen without clipping or awkward layout behavior.',
+        N'Finalizar presentación ejecutiva',
+        N'Preparar la versión final de la presentación ejecutiva, confirmar las métricas con producto y operaciones, e incluir una sección narrativa más extensa que luego ayude a validar cómo se renderiza una descripción larga en la pantalla de detalle de React Native sin recortes ni comportamientos extraños de maquetación.',
         'High',
         'Pending',
         '2026-06-03T08:00:00'
     ),
     (
-        N'Clean outdated backlog labels',
-        N'Remove obsolete labels from the backlog and keep only the categories still used by the team.',
+        N'Limpiar etiquetas antiguas del backlog',
+        N'Retirar las etiquetas obsoletas del backlog y conservar solo las categorías que el equipo sigue utilizando.',
         'Low',
         'InProgress',
         '2026-06-04T08:00:00'
     ),
     (
-        N'Update QA regression notes',
-        N'Consolidate the current regression notes so QA can reuse the same checklist in the next verification cycle.',
+        N'Actualizar notas de regresión de QA',
+        N'Consolidar las notas actuales de regresión para que QA pueda reutilizar la misma lista de verificación en el siguiente ciclo.',
         'Medium',
         'InProgress',
         '2026-06-05T08:00:00'
     ),
     (
-        N'Coordinate production hotfix',
-        N'Coordinate the hotfix rollout, confirm the deployment window and keep track of the validation steps after release.',
+        N'Coordinar hotfix de producción',
+        N'Coordinar el despliegue del hotfix, confirmar la ventana de liberación y hacer seguimiento a los pasos de validación posteriores.',
         'High',
         'InProgress',
         '2026-06-06T08:00:00'
     ),
     (
-        N'Archive resolved support ticket',
-        N'Close and archive the resolved support ticket after confirming there are no remaining follow-up actions.',
+        N'Archivar ticket de soporte resuelto',
+        N'Cerrar y archivar el ticket de soporte resuelto después de confirmar que no quedan acciones de seguimiento pendientes.',
         'Low',
         'Completed',
         '2026-06-07T08:00:00'
     ),
     (
-        N'Document release checklist',
-        N'Document the release checklist used during the last delivery and store the final version for reuse.',
+        N'Documentar lista de liberación',
+        N'Documentar la lista de liberación utilizada durante la última entrega y guardar la versión final para reutilizarla.',
         'Medium',
         'Completed',
         '2026-06-08T08:00:00'
     ),
     (
-        N'Publish weekly status summary',
-        N'Publish the final weekly status summary to stakeholders and capture the completed milestones for reporting.',
+        N'Publicar resumen semanal de estado',
+        N'Publicar el resumen semanal final para los interesados y registrar los hitos completados para el informe.',
         'High',
         'Completed',
         '2026-06-09T08:00:00'
     );
 
-    PRINT N'Initial task data inserted.';
+    PRINT N'Datos iniciales de tareas insertados.';
 END;
 ELSE
 BEGIN
-    PRINT N'Table dbo.Tasks already contains data. Seed skipped.';
+    PRINT N'La tabla dbo.Tasks ya contiene datos. Seed omitido.';
 END;
 GO
